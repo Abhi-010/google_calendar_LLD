@@ -21,8 +21,9 @@ public class Event extends BaseModel{
     private User organizer ;
     private String location ;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "invitation")
     private List<User> invitedUser ;
+
     private EventStatus status ;
 
     public Event(){

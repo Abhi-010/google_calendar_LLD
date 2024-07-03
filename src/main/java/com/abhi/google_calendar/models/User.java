@@ -1,6 +1,7 @@
 package com.abhi.google_calendar.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,9 +15,9 @@ public class User extends BaseModel{
     private String name ;
     private String email ;
 
-    @OneToMany
+    @ManyToMany
     private List<Event> invitation ;
 
-    @OneToMany
+    @OneToMany(mappedBy = "creator")
     List<Appointment> appointments ;
 }
