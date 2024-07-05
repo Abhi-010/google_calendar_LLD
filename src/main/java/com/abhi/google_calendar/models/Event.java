@@ -4,17 +4,22 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
+import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Getter
+@Setter
 public class Event extends BaseModel{
 
-    private Date startTime ;
-    private Date endTime ;
+    private LocalTime startTime ;
+    private LocalTime endTime ;
+    private LocalDate date ;
     private String title ;
     private String description;
     @ManyToOne
@@ -34,23 +39,24 @@ public class Event extends BaseModel{
         // copy all attributes and crate a Event object and return
         this.startTime = eventBuilder.getStartTime() ;
         this.endTime = eventBuilder.getEndTime();
-        this.description = eventBuilder.getDescription() ;
+        this.date = eventBuilder.getDate();
         this.title = eventBuilder.getTitle() ;
+        this.description = eventBuilder.getDescription() ;
         this.location = eventBuilder.getLocation() ;
         this.organizer = eventBuilder.getOrganizer();
         this.status = eventBuilder.getStatus();
-
         this.invitedUser = new ArrayList<>();
         this.invitedUser.addAll(eventBuilder.invitedUser);
     }
 
-    public static EventBuilder Builder(){
+    public static EventBuilder getBuilder(){
         return new EventBuilder() ;
     }
 
     public static class EventBuilder {
-        private Date startTime ;
-        private Date endTime ;
+        private LocalTime startTime ;
+        private LocalTime endTime ;
+        private LocalDate date ;
         private String title ;
         private String description;
         private User organizer ;
@@ -64,14 +70,18 @@ public class Event extends BaseModel{
             return  new Event(this);
         }
 
-        public EventBuilder setStartTime(Date startTime) {
+        public EventBuilder setStartTime(LocalTime startTime) {
             this.startTime = startTime;
             return this;
         }
 
-        public EventBuilder setEndTime(Date endTime) {
+        public EventBuilder setEndTime(LocalTime endTime) {
             this.endTime = endTime;
             return this;
+        }
+        public EventBuilder setDate(LocalDate date){
+            this.date = date ;
+            return this ;
         }
 
         public EventBuilder setTitle(String title) {
@@ -104,11 +114,15 @@ public class Event extends BaseModel{
             return this;
         }
 
-        public Date getStartTime() {
+        public LocalTime getStartTime() {
             return startTime;
         }
 
-        public Date getEndTime() {
+        public LocalDate getDate(){
+            return date ;
+        }
+
+        public LocalTime getEndTime() {
             return endTime;
         }
 
